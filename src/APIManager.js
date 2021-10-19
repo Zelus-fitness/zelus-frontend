@@ -1,4 +1,4 @@
-const URL = "http://localhost:6969";
+const URL = "https://zelus-fitness.herokuapp.com/";
 
 export const checkForToken = () => {
   const userToken =
