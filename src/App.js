@@ -6,8 +6,8 @@ import {
   Link,
   withRouter,
 } from "react-router-dom";
-import SignIn from "./SignIn";
-import SignUp from "./SignUp";
+import SignIn from "./Components/SignIn";
+import SignUp from "./Components/SignUp";
 
 export default class App extends Component {
   render() {

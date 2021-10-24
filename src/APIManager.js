@@ -1,4 +1,7 @@
-const URL = "https://zelus-fitness.herokuapp.com/";
+//Leave out the trailing "/"
+//CORRECT: yahoo.com
+//INCORRECT: yahoo.com/
+const URL = "https://zelus-fitness.herokuapp.com";
 
 export const checkForToken = () => {
   const userToken =
