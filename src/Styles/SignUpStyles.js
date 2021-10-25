@@ -1,3 +1,15 @@
+export const Colors = {
+  primary: "#ffffff",
+  secondary: "#e5e7eb",
+  tertiary: "#1f2937",
+  darkLight: "#9ca3af",
+  brand: "#FFCD38",
+  green: "#10b981",
+  red: "#ef4444",
+};
+
+const { primary, secondary, tertiary, darkLight, brand, green, red } = Colors;
+
 export default {
   mainContainer: {
     display: "flex",
@@ -5,8 +17,18 @@ export default {
     justifyContent: "center",
     padding: "50px",
   },
-  loginHeader: {
-    fontSize: "30px",
+  brandHeader: {
+    fontSize: "40px",
+    fontWeight: "bold",
+    color: brand,
+    padding: "10px",
+  },
+  signUpHeader: {
+    fontSize: "18px",
+    marginBottom: "20px",
+    letterSpacing: "1px",
+    fontWeight: "bold",
+    color: tertiary,
   },
   form: {
     display: "flex",
@@ -42,7 +64,7 @@ export default {
 
   passwordInput: { width: "20vw" },
   submitButtonContainer: { marginTop: "30px" },
-  submitButton: { width: "7.5vw" },
+  submitButton: { width: "7.5vw", backgroundColor: `${brand} !important` },
   signUpLink: {
     paddingTop: "20px",
     fontSize: "16px",

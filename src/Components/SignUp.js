@@ -5,7 +5,6 @@ import { withStyles } from "@mui/styles";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Alert from "@mui/material/Alert";
-import Stack from "@mui/material/Stack";
 import IconButton from "@mui/material/IconButton";
 import Collapse from "@mui/material/Collapse";
 import styles from "../Styles/SignUpStyles";
@@ -73,7 +72,7 @@ class SignUp extends Component {
             }
             sx={{ maxWidth: "50%", margin: "auto", width: "50%", mt: "2vh" }}
           >
-            Sign Up Successful!{" "}
+            Sign Up Successful!
             <Link to="/" style={{ color: "white" }}>
               Back to Sign In
             </Link>
@@ -102,7 +101,8 @@ class SignUp extends Component {
         </Collapse>
         <div className={classes.mainContainer}>
           <form className={classes.form} onSubmit={this.handleSubmit}>
-            <div className={classes.loginHeader}>Zelus Signup</div>
+            <div className={classes.brandHeader}>Zelus</div>
+            <div className={classes.signUpHeader}>Account Signup</div>
             <div className={classes.firstNameTextField}>
               <TextField
                 required
