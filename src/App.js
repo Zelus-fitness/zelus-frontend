@@ -9,6 +9,8 @@ import {
 import SignIn from "./Components/SignIn";
 import SignUp from "./Components/SignUp";
 import Dashboard from "./Components/Dashboard";
+import ShowExercise from "./Components/ShowExercise";
+import CreateExercise from "./Components/CreateExercise";
 
 export default class App extends Component {
   render() {
@@ -22,7 +24,13 @@ export default class App extends Component {
             <SignUp />
           </Route>
           <Route exact path="/dashboard">
-            <Dashboard/>
+            <Dashboard />
+          </Route>
+          <Route exact path="/exercise">
+            <ShowExercise />
+          </Route>
+          <Route exact path="/createexercise">
+            <CreateExercise />
           </Route>
         </Switch>
       </Router>

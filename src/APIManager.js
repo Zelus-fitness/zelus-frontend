@@ -91,3 +91,26 @@ export async function signUpUser(object) {
 
   return signUpUser;
 }
+
+export async function createExercise(object) {
+  const url = `${URL}/exercise`;
+  const data = {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: "JWT " + `${checkForToken()}`,
+    },
+    body: JSON.stringify(object),
+  };
+
+  const exerciseData = await fetch(url, data)
+    .then((response) => checkForErrors(response))
+    .then((results) => {
+      return results;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  return exerciseData;
+}

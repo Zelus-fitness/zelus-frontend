@@ -4,10 +4,7 @@ import { logInUser } from "../APIManager";
 import { withStyles } from "@mui/styles";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import Alert from "@mui/material/Alert";
-import IconButton from "@mui/material/IconButton";
-import Collapse from "@mui/material/Collapse";
-import CloseIcon from "@mui/icons-material/Close";
+import { ToastContainer, toast } from "react-toastify";
 import styles from "../Styles/SignInStyles";
 import Loader from "react-loader-spinner";
 import logo from "../Assets/img/expo-bg1.png";
@@ -22,8 +19,6 @@ class SignIn extends Component {
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.closeSuccessAlert = this.closeSuccessAlert.bind(this);
-    this.closeErrorAlert = this.closeErrorAlert.bind(this);
   }
 
   async handleSubmit(e) {
@@ -45,10 +40,15 @@ class SignIn extends Component {
           1000
         );
       } else {
-        this.setState({
-          error: true,
-          success: false,
-          error_message: loginInformation.message,
+        toast.success(loginInformation.success, {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored", 
         });
       }
     } catch (err) {
@@ -56,38 +56,22 @@ class SignIn extends Component {
     }
   }
 
-  closeSuccessAlert() {
-    this.setState({ success: false });
-  }
-
-  closeErrorAlert() {
-    this.setState({ error: false });
-  }
-
   render() {
     const { classes } = this.props;
     return (
       <div>
         {/* Close error alert */}
-        <Collapse in={this.state.error}>
-          <Alert
-            variant="filled"
-            severity="error"
-            action={
-              <IconButton
-                aria-label="close"
-                color="inherit"
-                size="small"
-                onClick={this.closeErrorAlert}
-              >
-                <CloseIcon fontSize="inherit" />
-              </IconButton>
-            }
-            sx={{ maxWidth: "50%", margin: "auto", width: "50%", mt: "2vh" }}
-          >
-            {this.state.error_message}
-          </Alert>
-        </Collapse>
+        <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
         <div className={classes.mainContainer}>
           <form className={classes.form} onSubmit={this.handleSubmit}>
             <img src={logo} alt="Logo" />

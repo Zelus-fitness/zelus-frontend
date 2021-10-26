@@ -7,20 +7,16 @@ import TextField from "@mui/material/TextField";
 import Alert from "@mui/material/Alert";
 import IconButton from "@mui/material/IconButton";
 import Collapse from "@mui/material/Collapse";
-import styles from "../Styles/SignUpStyles";
 import CloseIcon from "@mui/icons-material/Close";
+import styles from "../Styles/SignUpStyles";
+import { ToastContainer, toast } from "react-toastify";
 
 class SignUp extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      success: false,
-      error: false,
-    };
+    this.state = {};
 
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.closeSuccessAlert = this.closeSuccessAlert.bind(this);
-    this.closeErrorAlert = this.closeErrorAlert.bind(this);
   }
 
   async handleSubmit(e) {
@@ -34,20 +30,29 @@ class SignUp extends Component {
     };
 
     var signUpInformation = await signUpUser(SignUpData);
-    console.log(signUpInformation.dataValues);
     if (signUpInformation.success) {
-      this.setState({ success: true, error: false });
+      toast.success("Sign Up Successful!", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme:"colored"
+      });
     } else {
-      this.setState({ error: true, success: false });
+      toast.error("There has been an error, please try again", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme:"colored"
+      });
     }
-  }
-
-  closeSuccessAlert() {
-    this.setState({ success: false });
-  }
-
-  closeErrorAlert() {
-    this.setState({ error: false });
   }
 
   render() {
@@ -55,50 +60,18 @@ class SignUp extends Component {
 
     return (
       <div>
-        {/* Close success alert */}
-        <Collapse in={this.state.success}>
-          <Alert
-            variant="filled"
-            severity="success"
-            action={
-              <IconButton
-                aria-label="close"
-                color="inherit"
-                size="small"
-                onClick={this.closeSuccessAlert}
-              >
-                <CloseIcon fontSize="inherit" />
-              </IconButton>
-            }
-            sx={{ maxWidth: "50%", margin: "auto", width: "50%", mt: "2vh" }}
-          >
-            Sign Up Successful!
-            <Link to="/" style={{ color: "white" }}>
-              Back to Sign In
-            </Link>
-          </Alert>
-        </Collapse>
+        <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
 
-        {/* Close error alert */}
-        <Collapse in={this.state.error}>
-          <Alert
-            variant="filled"
-            severity="error"
-            action={
-              <IconButton
-                aria-label="close"
-                color="inherit"
-                size="small"
-                onClick={this.closeErrorAlert}
-              >
-                <CloseIcon fontSize="inherit" />
-              </IconButton>
-            }
-            sx={{ maxWidth: "50%", margin: "auto", width: "50%", mt: "2vh" }}
-          >
-            There has been an error, please try again
-          </Alert>
-        </Collapse>
         <div className={classes.mainContainer}>
           <form className={classes.form} onSubmit={this.handleSubmit}>
             <div className={classes.brandHeader}>Zelus</div>
