@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
-import { logInUser } from "../APIManager";
+import { logInUser, checkForToken } from "../APIManager";
 import { withStyles } from "@mui/styles";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -19,6 +19,12 @@ class SignIn extends Component {
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentDidMount() {
+    if (checkForToken()) {
+      this.props.history.push("/dashboard");
+    }
   }
 
   async handleSubmit(e) {
@@ -40,7 +46,7 @@ class SignIn extends Component {
           1000
         );
       } else {
-        toast.success(loginInformation.success, {
+        toast.error(loginInformation.message, {
           position: "top-center",
           autoClose: 5000,
           hideProgressBar: false,
@@ -48,7 +54,7 @@ class SignIn extends Component {
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: "colored", 
+          theme: "colored",
         });
       }
     } catch (err) {

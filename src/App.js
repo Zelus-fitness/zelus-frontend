@@ -11,6 +11,7 @@ import SignUp from "./Components/SignUp";
 import Dashboard from "./Components/Dashboard";
 import ShowExercise from "./Components/ShowExercise";
 import CreateExercise from "./Components/CreateExercise";
+import SingleExercise from "./Components/SingleExercise";
 
 export default class App extends Component {
   render() {
@@ -28,6 +29,9 @@ export default class App extends Component {
           </Route>
           <Route exact path="/exercise">
             <ShowExercise />
+          </Route>
+          <Route exact path="/exercise/:id">
+            <SingleExercise />
           </Route>
           <Route exact path="/createexercise">
             <CreateExercise />

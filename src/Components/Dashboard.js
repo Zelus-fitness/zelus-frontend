@@ -8,6 +8,7 @@ import { Link, withRouter } from "react-router-dom";
 class Dashboard extends Component {
   componentDidMount() {
     if (!checkForToken()) {
+      this.props.history.push("/")
       toast.error("You have been logged out", {
         position: "top-center",
         autoClose: 5000,

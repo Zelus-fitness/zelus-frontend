@@ -114,3 +114,46 @@ export async function createExercise(object) {
     });
   return exerciseData;
 }
+
+export async function getExercisesByUser() {
+  const url = `${URL}/user/exercise`;
+  const data = {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: "JWT " + `${checkForToken()}`,
+    },
+  };
+  const exerciseData = await fetch(url, data)
+    .then((response) => checkForErrors(response))
+    .then((results) => {
+      return results;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  return exerciseData;
+}
+
+export async function getExerciseByID(id) {
+  const url = `${URL}/exercise/${id}`;
+  const data = {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: "JWT " + `${checkForToken()}`,
+    },
+  };
+
+  const exerciseData = await fetch(url, data)
+    .then((response) => checkForErrors(response))
+    .then((results) => {
+      return results;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  return exerciseData;
+}

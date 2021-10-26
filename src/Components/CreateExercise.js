@@ -5,9 +5,10 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";
+import { ToastContainer, toast } from "react-toastify";
 import styles from "../Styles/CreateExerciseStyles";
 import { Link, withRouter } from "react-router-dom";
-import { createExercise } from "../APIManager";
+import { checkForToken, createExercise } from "../APIManager";
 
 class CreateExercise extends Component {
   constructor(props) {
@@ -19,6 +20,22 @@ class CreateExercise extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleDropDownMenuChange = this.handleDropDownMenuChange.bind(this);
     this.handleCheckBox = this.handleCheckBox.bind(this);
+  }
+
+  componentDidMount() {
+    if (!checkForToken()) {
+      this.props.history.push("/");
+      toast.error("You have been logged out", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
   }
 
   async handleSubmit(e) {
@@ -36,10 +53,28 @@ class CreateExercise extends Component {
     try {
       var exerciseResponse = await createExercise(exerciseData);
       if (exerciseResponse.success) {
-        console.log("success");
+        toast.success("Exercise was created successfully", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
       }
     } catch (err) {
-      console.log(err);
+      toast.error(err, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
     }
   }
 
@@ -68,19 +103,23 @@ class CreateExercise extends Component {
       { value: "hamstring", label: "Hamstring" },
       { value: "calves", label: "Calves" },
     ];
+    const { classes } = this.props;
     return (
-      <div>
-        <form onSubmit={this.handleSubmit}>
-          <div>
+      <div className={classes.mainContainer}>
+        <ToastContainer />
+        <div className={classes.brandHeader}>Create Exercise</div>
+        <form onSubmit={this.handleSubmit} className={classes.form}>
+          <div className={classes.textFieldContainer}>
             <TextField
               required
               id="outlined-required"
               label="Name"
               name="name"
+              className={classes.textField}
             />
           </div>
 
-          <div>
+          <div className={classes.textFieldContainer}>
             <TextField
               id="outlined-number"
               name="sets"
@@ -89,10 +128,11 @@ class CreateExercise extends Component {
               InputLabelProps={{
                 shrink: true,
               }}
+              className={classes.textField}
             />
           </div>
 
-          <div>
+          <div className={classes.textFieldContainer}>
             <TextField
               id="outlined-number"
               name="reps"
@@ -101,10 +141,11 @@ class CreateExercise extends Component {
               InputLabelProps={{
                 shrink: true,
               }}
+              className={classes.textField}
             />
           </div>
 
-          <div>
+          <div className={classes.textFieldContainer}>
             <TextField
               id="outlined-number"
               name="rpe"
@@ -113,17 +154,18 @@ class CreateExercise extends Component {
               InputLabelProps={{
                 shrink: true,
               }}
+              className={classes.textField}
             />
           </div>
-          <div>
+          <div className={classes.textFieldContainer}>
             <TextField
               id="outlined-select-currency"
               select
               label="Type of Exercise"
               value={this.state.type}
               onChange={this.handleDropDownMenuChange}
-              helperText="Please select your exercise type"
               name="type"
+              className={classes.textField}
             >
               {exercise_type.map((option) => (
                 <MenuItem key={option.value} value={option.value}>
@@ -133,7 +175,7 @@ class CreateExercise extends Component {
             </TextField>
           </div>
 
-          <div>
+          <div className={classes.textFieldContainer}>
             <FormControlLabel
               control={<Checkbox defaultChecked />}
               checked={this.state.checked}
@@ -143,7 +185,11 @@ class CreateExercise extends Component {
             />
           </div>
           <div>
-            <Button variant="contained" type="submit">
+            <Button
+              variant="contained"
+              type="submit"
+              className={classes.submitButton}
+            >
               Submit
             </Button>
           </div>
