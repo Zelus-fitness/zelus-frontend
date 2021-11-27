@@ -1,13 +1,12 @@
 import React, { Component } from "react";
-import { toast } from "react-toastify";
-import { checkForToken } from "../APIManager";
 import { withStyles } from "@mui/styles";
-import styles from "../Styles/DashboardStyles";
 import { Link, withRouter } from "react-router-dom";
-import { getWorkoutsByUser } from "../APIManager";
+import styles from "../Styles/WorkoutStyles";
 import Button from "@mui/material/Button";
+import { getWorkoutsByUser, checkForToken } from "../APIManager";
+import { toast } from "react-toastify";
 
-class Dashboard extends Component {
+class Workout extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -39,27 +38,42 @@ class Dashboard extends Component {
       this.setState({ existing_workouts: true });
     }
   }
-  
+
   render() {
     const { classes } = this.props;
-
     return (
       <div className={classes.mainContainer}>
-        {!this.state.existing_workouts ? (
-          <div>
-            <h1>You don't have any workouts!</h1>
-            <Link to="/workout">
-              <Button className={classes.submitButton} variant="contained">
-                Create one!
-              </Button>
-            </Link>
-          </div>
-        ) : (
-          <div>{this.state.workouts}</div>
-        )}
+        <div>
+          <h2>Quick Start</h2>
+        </div>
+        <div>
+          <Link to="/workout/create">
+            <Button
+              variant="contained"
+              type="submit"
+              className={classes.submitButton}
+            >
+              Start an Empty Workout
+            </Button>
+          </Link>
+        </div>
+
+        <div>
+          <h2>My Workouts</h2>
+        </div>
+
+        <div>
+          {!this.state.existing_workouts ? (
+            <div>
+              <p>You don't have any workouts! You should create one</p>
+            </div>
+          ) : (
+            <div>{this.state.workouts}</div>
+          )}
+        </div>
       </div>
     );
   }
 }
 
-export default withRouter(withStyles(styles)(Dashboard));
+export default withRouter(withStyles(styles)(Workout));

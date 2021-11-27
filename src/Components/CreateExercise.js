@@ -106,7 +106,6 @@ class CreateExercise extends Component {
     const { classes } = this.props;
     return (
       <div className={classes.mainContainer}>
-        <ToastContainer />
         <div className={classes.brandHeader}>Create Exercise</div>
         <form onSubmit={this.handleSubmit} className={classes.form}>
           <div className={classes.textFieldContainer}>

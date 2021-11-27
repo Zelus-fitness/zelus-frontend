@@ -11,7 +11,9 @@ export const Colors = {
 const { primary, secondary, tertiary, darkLight, brand, green, red } = Colors;
 
 export default {
-  submitButton: { width: "7.5vw", backgroundColor: `${brand} !important` },
+  mainContainer: {
+    padding: "1%",
+  },
 
-  mainContainer: { padding: "1%" },
+  submitButton: { width: "15vw", backgroundColor: `${brand} !important` },
 };

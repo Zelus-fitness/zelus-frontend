@@ -33,7 +33,7 @@ async function checkForErrors(response) {
     ) {
       let message = await response.json();
 
-      console.log("Error");
+      console.log(message)
 
       throw Error(response.statusText);
     }
@@ -156,4 +156,49 @@ export async function getExerciseByID(id) {
       console.log(error);
     });
   return exerciseData;
+}
+
+export async function getWorkoutsByUser() {
+  const url = `${URL}/user/workout`;
+  const data = {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: "JWT " + `${checkForToken()}`,
+    },
+  };
+
+  const workoutData = await fetch(url, data)
+    .then((response) => checkForErrors(response))
+    .then((results) => {
+      return results;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  return workoutData;
+}
+
+export async function createWorkout(workoutObj) {
+  const url = `${URL}/workout`;
+  const data = {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: "JWT " + `${checkForToken()}`,
+    },
+    body: JSON.stringify(workoutObj),
+  };
+
+  const workoutData = await fetch(url, data)
+    .then((response) => checkForErrors(response))
+    .then((results) => {
+      return results;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  return workoutData;
 }

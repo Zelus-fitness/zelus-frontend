@@ -10,6 +10,7 @@ class ShowExercise extends Component {
     super(props);
     this.state = {
       exercise_list: [],
+      existing_exercises: false,
     };
   }
 
@@ -29,33 +30,43 @@ class ShowExercise extends Component {
     }
     try {
       var exerciseData = await getExercisesByUser();
-      this.setState({ exercise_list: exerciseData.data["0"] });
+      if (!exerciseData) {
+        this.setState({
+          exercise_list: exerciseData.data["0"],
+          existing_exercises: true,
+        });
+      }
     } catch (err) {
-      this.props.history.push("/");
-      toast.error("You have been logged out", {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
+      // localStorage.removeItem("token");
+      // this.props.history.push("/");
+      // toast.error("You have been logged out", {
+      //   position: "top-center",
+      //   autoClose: 5000,
+      //   hideProgressBar: false,
+      //   closeOnClick: true,
+      //   pauseOnHover: true,
+      //   draggable: true,
+      //   progress: undefined,
+      //   theme: "colored",
+      // });
     }
   }
 
   render() {
     return (
       <div>
-        {this.state.exercise_list.map((exercise) => {
-          return (
-            <div>
-              <div>{JSON.stringify(exercise)}</div>
-              <Link to={`/exercise/${exercise.id}`}>Link!</Link>
-            </div>
-          );
-        })}
+        {!this.state.existing_exercises ? (
+          <div>You don't have any exercises!</div>
+        ) : (
+          this.state.exercise_list.map((exercise) => {
+            return (
+              <div>
+                <div>{JSON.stringify(exercise)}</div>
+                <Link to={`/exercise/${exercise.id}`}>Link!</Link>
+              </div>
+            );
+          })
+        )}
       </div>
     );
   }
