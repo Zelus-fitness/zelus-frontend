@@ -7,6 +7,8 @@ import { toast } from "react-toastify";
 import { TextField } from "@mui/material";
 import Button from "@mui/material/Button";
 import { v4 as uuidv4 } from "uuid";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 class CreateWorkout extends Component {
   constructor(props) {
@@ -40,9 +42,9 @@ class CreateWorkout extends Component {
   async handleSubmit(e) {
     e.preventDefault();
 
-    if (this.state.button === 2) {
-      console.log("hello")
-    }
+    console.log(this.state.exercises);
+    console.log(e.target.name.value);
+    console.log(e.target.notes.value);
   }
 
   handleAddExercise() {
@@ -75,7 +77,6 @@ class CreateWorkout extends Component {
             Object.assign(exercise_object, tempobj);
             return { exercise: newData };
           });
-          console.log(this.state.exercises);
         }
       }.bind(this)
     );
@@ -89,9 +90,10 @@ class CreateWorkout extends Component {
           <div className={classes.textFieldContainer}>
             <TextField
               required
-              id="outlined-required"
               label="Name"
               name="name"
+              variant="standard"
+              id="standard-required"
               className={classes.textField}
             />
           </div>
@@ -99,9 +101,11 @@ class CreateWorkout extends Component {
           <div className={classes.textFieldContainer}>
             <TextField
               required
-              id="outlined-required"
               label="Notes"
               name="notes"
+              id="standard-required"
+              label="Required"
+              variant="standard"
               className={classes.textField}
             />
           </div>
@@ -141,8 +145,24 @@ class CreateWorkout extends Component {
                         (detail, detail_key) => {
                           return (
                             <div key={detail_key}>
-                              <TextField /> <TextField />
-                              <TextField />
+                              <TextField
+                                id="standard-required"
+                                label="Set"
+                                defaultValue={detail_key + 1}
+                                variant="standard"
+                              />
+                              <TextField
+                                id="standard-required"
+                                label="Reps"
+                                defaultValue=""
+                                variant="standard"
+                              />
+                              <TextField
+                                id="standard-required"
+                                label="Weight"
+                                defaultValue=""
+                                variant="standard"
+                              />
                             </div>
                           );
                         }
