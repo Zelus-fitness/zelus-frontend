@@ -13,6 +13,7 @@ const { primary, secondary, tertiary, darkLight, brand, green, red } = Colors;
 export default {
   navbarContainer: {
     display: "flex",
+    position: "fixed",
     flexDirection: "column",
     alignItems: "center",
     height: "100vh",

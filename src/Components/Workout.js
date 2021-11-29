@@ -10,7 +10,7 @@ class Workout extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      workouts: null,
+      workouts: [],
       existing_workouts: false,
       loading: false,
     };
@@ -32,10 +32,12 @@ class Workout extends Component {
     }
 
     var workoutData = await getWorkoutsByUser();
+    console.log(workoutData);
+
     if (!workoutData) {
       this.setState({ existing_workouts: false });
     } else if (workoutData) {
-      this.setState({ existing_workouts: true });
+      this.setState({ existing_workouts: true, workouts: workoutData });
     }
   }
 
@@ -68,7 +70,19 @@ class Workout extends Component {
               <p>You don't have any workouts! You should create one</p>
             </div>
           ) : (
-            <div>{this.state.workouts}</div>
+            <div>
+              {this.state.workouts.map((data, i) => {
+                return (
+                  <div className={classes.workoutContainer}>
+                    <div className={classes.workoutNameText}>
+                      <h2>{data.name}</h2>
+                    </div>
+                    <div className={classes.workoutNameText}>{data.notes}</div>
+                    <div className={classes.workoutNameText}>{data.time}</div>
+                  </div>
+                );
+              })}
+            </div>
           )}
         </div>
       </div>

@@ -6,7 +6,9 @@ export default class Layout extends Component {
     return (
       <div style={{ display: "flex", flexDirection: "row" }}>
         <Navbar />
-        <div style={{ width: "85%" }}>{this.props.children}</div>
+        <div style={{ width: "85%", left: "15%", position: "absolute" }}>
+          {this.props.children}
+        </div>
       </div>
     );
   }

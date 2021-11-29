@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { withStyles } from "@mui/styles";
 import { Link, withRouter } from "react-router-dom";
 import styles from "../Styles/CreateWorkoutStyles";
-import { checkForToken } from "../APIManager";
+import { checkForToken, createWorkout } from "../APIManager";
 import { toast } from "react-toastify";
 import { TextField } from "@mui/material";
 import Button from "@mui/material/Button";
@@ -46,12 +46,17 @@ class CreateWorkout extends Component {
     e.preventDefault();
 
     if (this.state.button === 2) {
-      console.log("hello");
-      console.log(this.state.exercises);
-      console.log(e.target.name.value);
-      console.log(e.target.notes.value);
+      var tempobj = {
+        workout: {
+          name: e.target.name.value,
+          notes: e.target.notes.value,
+          public: true,
+          time: 0,
+          exercise: this.state.exercises,
+        },
+      };
+      var result = await createWorkout(tempobj);
     }
-
   }
 
   handleAddExercise() {

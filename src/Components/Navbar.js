@@ -27,25 +27,26 @@ class Navbar extends Component {
     const { classes } = this.props;
 
     return (
-      <div className={classes.navbarContainer}>
-        {sidebarLinks.map(({ name, route, icon }, index) => {
-          return (
-            <Link
-              to={route}
-              className={`${
-                this.currentPath() === route
-                  ? `${classes.sidebarLinkisActive}`
-                  : `${classes.sideBarLink}`
-              }`}
-            >
-              <div>
-                <FontAwesomeIcon icon={icon} />
-              </div>
-              <div>{`${name}`}</div>
-            </Link>
-          );
-        })}
-        {/* <Link className={classes.sideBarLink} to="/dashboard">
+
+        <div className={classes.navbarContainer}>
+          {sidebarLinks.map(({ name, route, icon }, index) => {
+            return (
+              <Link
+                to={route}
+                className={`${
+                  this.currentPath() === route
+                    ? `${classes.sidebarLinkisActive}`
+                    : `${classes.sideBarLink}`
+                }`}
+              >
+                <div>
+                  <FontAwesomeIcon icon={icon} />
+                </div>
+                <div>{`${name}`}</div>
+              </Link>
+            );
+          })}
+          {/* <Link className={classes.sideBarLink} to="/dashboard">
           <div>
             <FontAwesomeIcon icon={faHome} />
           </div>
@@ -75,7 +76,8 @@ class Navbar extends Component {
           </div>
           <div>Exercise</div>
         </Link> */}
-      </div>
+        </div>
+
     );
   }
 }
