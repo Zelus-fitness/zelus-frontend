@@ -7,6 +7,8 @@ import { toast } from "react-toastify";
 import { TextField } from "@mui/material";
 import Button from "@mui/material/Button";
 import { v4 as uuidv4 } from "uuid";
+import Select from "react-select";
+import groupedOptions from "../exercises_type";
 
 class CreateWorkout extends Component {
   constructor(props) {
@@ -19,6 +21,7 @@ class CreateWorkout extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleAddExercise = this.handleAddExercise.bind(this);
     this.handleAddSet = this.handleAddSet.bind(this);
+    this.handleChangeType = this.handleChangeType.bind(this);
   }
 
   async componentDidMount() {
@@ -41,7 +44,7 @@ class CreateWorkout extends Component {
     e.preventDefault();
 
     if (this.state.button === 2) {
-      console.log("hello")
+      console.log("hello");
     }
   }
 
@@ -51,8 +54,8 @@ class CreateWorkout extends Component {
         ...prevState.exercises,
         {
           id: uuidv4(),
-          name: "",
           type: "",
+          category: "",
           details: [{ set: 1, lbs: 0, reps: 0 }],
         },
       ],
@@ -69,6 +72,27 @@ class CreateWorkout extends Component {
             { set: number_set, lbs: 0, reps: 0 },
           ]);
           tempobj.details = tempexercise;
+          this.setState((prevState) => {
+            let newData = prevState.exercises;
+            let exercise_object = newData.find((d) => d.id === tempobj.id);
+            Object.assign(exercise_object, tempobj);
+            return { exercise: newData };
+          });
+          console.log(this.state.exercises);
+        }
+      }.bind(this)
+    );
+  }
+
+  handleChangeType(type, id) {
+    console.log(type);
+    console.log(id);
+    this.state.exercises.forEach(
+      function (single_exercise, index) {
+        if (single_exercise.id === id) {
+          var tempobj = single_exercise;
+          tempobj.type = type.value;
+          tempobj.category = type.category;
           this.setState((prevState) => {
             let newData = prevState.exercises;
             let exercise_object = newData.find((d) => d.id === tempobj.id);
@@ -137,6 +161,12 @@ class CreateWorkout extends Component {
                 {this.state.exercises.map((exercise, key) => {
                   return (
                     <div key={exercise.id}>
+                      <Select
+                        options={groupedOptions}
+                        onChange={(e) => {
+                          this.handleChangeType(e, exercise.id);
+                        }}
+                      />
                       {this.state.exercises[key].details.map(
                         (detail, detail_key) => {
                           return (
