@@ -56,6 +56,19 @@ class CreateWorkout extends Component {
         },
       };
       var result = await createWorkout(tempobj);
+      if (result.success) {
+        toast.success("Workout was created successfully", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      } 
+      console.log(result);
     }
   }
 
@@ -137,7 +150,7 @@ class CreateWorkout extends Component {
               label="Notes"
               name="notes"
               id="standard-required"
-              label="Required"
+              label="Notes"
               variant="standard"
               className={classes.textField}
             />

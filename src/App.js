@@ -14,7 +14,8 @@ import ShowExercise from "./Components/ShowExercise";
 import CreateExercise from "./Components/CreateExercise";
 import SingleExercise from "./Components/SingleExercise";
 import Workout from "./Components/Workout";
-import CreateWorkout from "./Components/CreateWorkout"
+import CreateWorkout from "./Components/CreateWorkout";
+import Profile from "./Components/Profile";
 import Layout from "./Layout";
 
 export default class App extends Component {
@@ -35,6 +36,9 @@ export default class App extends Component {
             <Layout>
               <Route exact path="/dashboard">
                 <Dashboard />
+              </Route>
+              <Route exact path="/profile">
+                <Profile />
               </Route>
               <Route exact path="/workout">
                 <Workout />

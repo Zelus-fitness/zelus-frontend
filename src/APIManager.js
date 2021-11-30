@@ -1,8 +1,8 @@
 //Leave out the trailing "/"
 //CORRECT: yahoo.com
 //INCORRECT: yahoo.com/
-// const URL = "https://zelus-fitness.herokuapp.com";
-const URL = "http://localhost:8002"
+const URL = "https://zelus-fitness.herokuapp.com";
+// const URL = "http://localhost:8002"
 
 export const checkForToken = () => {
   const userToken =
@@ -34,7 +34,7 @@ async function checkForErrors(response) {
     ) {
       let message = await response.json();
 
-      console.log(message)
+      console.log(message);
 
       throw Error(response.statusText);
     }
@@ -191,6 +191,28 @@ export async function createWorkout(workoutObj) {
       Authorization: "JWT " + `${checkForToken()}`,
     },
     body: JSON.stringify(workoutObj),
+  };
+
+  const workoutData = await fetch(url, data)
+    .then((response) => checkForErrors(response))
+    .then((results) => {
+      return results;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  return workoutData;
+}
+
+export async function getExtendedUserInfo() {
+  const url = `${URL}/extendedprofile`;
+  const data = {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: "JWT " + `${checkForToken()}`,
+    },
   };
 
   const workoutData = await fetch(url, data)

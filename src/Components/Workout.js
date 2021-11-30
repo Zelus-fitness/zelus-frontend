@@ -33,7 +33,6 @@ class Workout extends Component {
 
     var workoutData = await getWorkoutsByUser();
     console.log(workoutData);
-
     if (!workoutData) {
       this.setState({ existing_workouts: false });
     } else if (workoutData) {
