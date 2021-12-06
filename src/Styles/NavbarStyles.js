@@ -23,6 +23,19 @@ export default {
     background: Colors.brand,
   },
 
+  navbarLinks: {
+    display: "flex",
+    position: "fixed",
+    flexDirection: "column",
+    width: "15%",
+    marginBottom: "auto",
+  },
+
+  signOutButtonContainer: {
+    marginTop: "auto",
+    margin: "50px"
+  },
+
   sideBarLink: {
     display: "flex",
     justifyContent: "flex-start",
@@ -56,5 +69,13 @@ export default {
     textDecoration: "none",
     color: Colors.primary,
     boxShadow: "inset 7.5px 0px 0px 0px #FFFFFF",
+  },
+  signoutButton: {
+    width: "7.5vw",
+    height: "5vh",
+    display: "flex !important",
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: `#0A9FFA !important`,
   },
 };

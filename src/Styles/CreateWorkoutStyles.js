@@ -57,4 +57,21 @@ export default {
     alignItems: "center",
     backgroundColor: `#0A9FFA !important`,
   },
+
+  dropDownMenu: {
+    width: "30%",
+  },
+
+  groupOfSets: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+  },
+
+  trashIcon: {
+    "&:hover": {
+      color: "red",
+      cursor: "pointer",
+    },
+  },
 };

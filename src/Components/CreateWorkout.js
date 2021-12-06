@@ -24,6 +24,8 @@ class CreateWorkout extends Component {
     this.handleAddExercise = this.handleAddExercise.bind(this);
     this.handleAddSet = this.handleAddSet.bind(this);
     this.handleChangeType = this.handleChangeType.bind(this);
+    this.handleDeleteSet = this.handleDeleteSet.bind(this);
+    this.handleDeleteExercise = this.handleDeleteExercise.bind(this);
   }
 
   async componentDidMount() {
@@ -67,9 +69,42 @@ class CreateWorkout extends Component {
           progress: undefined,
           theme: "colored",
         });
-      } 
+      }
       console.log(result);
     }
+  }
+
+  handleDeleteSet(set, exercise_id) {
+    var temp_exercise_state = this.state.exercises;
+    for (var exercise_obj of temp_exercise_state) {
+      if (exercise_obj.id === exercise_id) {
+        var details_array = exercise_obj.details;
+        for (var i = 0; i < details_array.length; i++) {
+          if (details_array[i].set === set) {
+            details_array.splice(i, 1);
+          }
+        }
+        var count = 1;
+        for (var i = 0; i < details_array.length; i++) {
+          if (details_array[i].set !== count) {
+            details_array[i].set = count;
+          }
+          count++;
+        }
+      }
+    }
+
+    this.setState({ exercises: temp_exercise_state });
+  }
+
+  handleDeleteExercise(exercise_id) {
+    var temp_exercise_state = this.state.exercises;
+    for (var i = 0; i < temp_exercise_state.length; i++) {
+      if (temp_exercise_state[i].id === exercise_id) {
+        temp_exercise_state.splice(i, 1);
+      }
+    }
+    this.setState({ exercises: temp_exercise_state });
   }
 
   handleAddExercise() {
@@ -84,6 +119,8 @@ class CreateWorkout extends Component {
         },
       ],
     }));
+
+    console.log(this.state.exercises);
   }
 
   handleAddSet(id) {
@@ -187,16 +224,28 @@ class CreateWorkout extends Component {
                 {this.state.exercises.map((exercise, key) => {
                   return (
                     <div key={exercise.id}>
+                      Type:
                       <Select
                         options={groupedOptions}
                         onChange={(e) => {
                           this.handleChangeType(e, exercise.id);
                         }}
+                        className={classes.dropDownMenu}
+                      />
+                      <FontAwesomeIcon
+                        icon={faTrash}
+                        className={classes.trashIcon}
+                        onClick={() => {
+                          this.handleDeleteExercise(exercise.id);
+                        }}
                       />
                       {this.state.exercises[key].details.map(
                         (detail, detail_key) => {
                           return (
-                            <div key={detail_key}>
+                            <div
+                              key={detail_key}
+                              className={classes.groupOfSets}
+                            >
                               <TextField
                                 id="standard-required"
                                 label="Set"
@@ -214,6 +263,16 @@ class CreateWorkout extends Component {
                                 label="Weight"
                                 defaultValue=""
                                 variant="standard"
+                              />
+                              <FontAwesomeIcon
+                                icon={faTrash}
+                                className={classes.trashIcon}
+                                onClick={() => {
+                                  this.handleDeleteSet(
+                                    detail_key + 1,
+                                    exercise.id
+                                  );
+                                }}
                               />
                             </div>
                           );

@@ -4,13 +4,17 @@ import { withStyles } from "@mui/styles";
 import styles from "../Styles/NavbarStyles";
 import Workout from "../Assets/tabBarIcons/workout.png";
 import sidebarLinks from "../NavbarLinks";
+import Button from "@mui/material/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { signOutUser } from "../APIManager";
+import { ToastContainer, toast } from "react-toastify";
 
 class Navbar extends Component {
   constructor(props) {
     super(props);
     this.state = {};
     this.currentPath = this.currentPath.bind(this);
+    this.handleSignOut = this.handleSignOut.bind(this);
   }
 
   componentDidMount() {
@@ -23,12 +27,31 @@ class Navbar extends Component {
     return "/" + parts[1];
   }
 
+  async handleSignOut() {
+    var result = await signOutUser();
+    if (result.success) {
+      localStorage.removeItem("token");
+      this.props.history.push("/");
+
+      toast.success("Successfully Logged Out", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
+  }
+
   render() {
     const { classes } = this.props;
 
     return (
-
-        <div className={classes.navbarContainer}>
+      <div className={classes.navbarContainer}>
+        <div className={classes.navbarLinks}>
           {sidebarLinks.map(({ name, route, icon }, index) => {
             return (
               <Link
@@ -46,7 +69,9 @@ class Navbar extends Component {
               </Link>
             );
           })}
-          {/* <Link className={classes.sideBarLink} to="/dashboard">
+        </div>
+
+        {/* <Link className={classes.sideBarLink} to="/dashboard">
           <div>
             <FontAwesomeIcon icon={faHome} />
           </div>
@@ -76,8 +101,16 @@ class Navbar extends Component {
           </div>
           <div>Exercise</div>
         </Link> */}
+        <div className={classes.signOutButtonContainer}>
+          <Button
+            variant="contained"
+            className={classes.signoutButton}
+            onClick={this.handleSignOut}
+          >
+            Sign Out
+          </Button>
         </div>
-
+      </div>
     );
   }
 }

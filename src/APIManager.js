@@ -1,12 +1,12 @@
 //Leave out the trailing "/"
 //CORRECT: yahoo.com
 //INCORRECT: yahoo.com/
-const URL = "https://zelus-fitness.herokuapp.com";
-// const URL = "http://localhost:8002"
+// const URL = "https://zelus-fitness.herokuapp.com";
+const URL = "http://localhost:8002";
 
 export const checkForToken = () => {
   const userToken =
-    localStorage.getItem("token") === null ? "" : localStorage.getItem("token");
+    localStorage.getItem("token") == null ? "" : localStorage.getItem("token");
 
   return userToken;
 };
@@ -224,4 +224,26 @@ export async function getExtendedUserInfo() {
       console.log(error);
     });
   return workoutData;
+}
+
+export async function signOutUser() {
+  const url = `${URL}/signout`;
+  const data = {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: "JWT " + `${checkForToken()}`,
+    },
+  };
+
+  const signoutData = await fetch(url, data)
+    .then((response) => checkForErrors(response))
+    .then((results) => {
+      return results;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  return signoutData;
 }
