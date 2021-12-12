@@ -226,6 +226,29 @@ export async function getExtendedUserInfo() {
   return workoutData;
 }
 
+export async function updateExtendedProfile(object) {
+  const url = `${URL}/extendedprofile`;
+  const data = {
+    method: "PUT",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: "JWT " + `${checkForToken()}`,
+    },
+    body: JSON.stringify(object),
+  };
+
+  const workoutData = await fetch(url, data)
+    .then((response) => checkForErrors(response))
+    .then((results) => {
+      return results;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  return workoutData;
+}
+
 export async function signOutUser() {
   const url = `${URL}/signout`;
   const data = {

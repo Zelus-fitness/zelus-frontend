@@ -11,6 +11,11 @@ import Select from "react-select";
 import groupedOptions from "../exercises_type";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import Tooltip from "@mui/material/Tooltip";
+import IconButton from "@mui/material/IconButton";
+import Switch from "@mui/material/Switch";
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
 
 class CreateWorkout extends Component {
   constructor(props) {
@@ -18,6 +23,9 @@ class CreateWorkout extends Component {
     this.state = {
       button: null,
       exercises: [],
+      timer: 0,
+      timerString: "0:00",
+      public: true,
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -26,6 +34,11 @@ class CreateWorkout extends Component {
     this.handleChangeType = this.handleChangeType.bind(this);
     this.handleDeleteSet = this.handleDeleteSet.bind(this);
     this.handleDeleteExercise = this.handleDeleteExercise.bind(this);
+    this.handleChangeWeightNumber = this.handleChangeWeightNumber.bind(this);
+    this.handleChangeRepsNumber = this.handleChangeRepsNumber.bind(this);
+    this.countUp = this.countUp.bind(this);
+    this.startCounting = this.startCounting.bind(this);
+    this.switchPublic = this.switchPublic.bind(this);
   }
 
   async componentDidMount() {
@@ -42,6 +55,8 @@ class CreateWorkout extends Component {
         theme: "colored",
       });
     }
+
+    this.startCounting();
   }
 
   async handleSubmit(e) {
@@ -52,12 +67,13 @@ class CreateWorkout extends Component {
         workout: {
           name: e.target.name.value,
           notes: e.target.notes.value,
-          public: true,
-          time: 0,
+          public: this.state.public,
+          time: this.state.timer,
           exercise: this.state.exercises,
         },
       };
       var result = await createWorkout(tempobj);
+      console.log(result);
       if (result.success) {
         toast.success("Workout was created successfully", {
           position: "top-center",
@@ -74,11 +90,63 @@ class CreateWorkout extends Component {
     }
   }
 
+  switchPublic() {
+    this.setState({ public: !this.state.public });
+  }
+
+  handleChangeWeightNumber(set, exercise_id, new_weight) {
+    if (!Number(new_weight.target.value)) {
+      return;
+    }
+
+    var temp_exercise_state = this.state.exercises;
+
+    for (var exercise_obj of temp_exercise_state) {
+      var details_array;
+      if (exercise_obj.id === exercise_id) {
+        details_array = exercise_obj.details;
+        for (var i = 0; i < details_array.length; i++) {
+          if (details_array[i].set === set) {
+            details_array[i].weight = new_weight.target.value;
+          }
+        }
+        exercise_obj.details = details_array;
+      }
+    }
+
+    this.setState({ exercises: temp_exercise_state });
+  }
+
+  handleChangeRepsNumber(set, exercise_id, new_reps) {
+    if (!Number(new_reps.target.value)) {
+      return;
+    }
+
+    var temp_exercise_state = this.state.exercises;
+
+    for (var exercise_obj of temp_exercise_state) {
+      var details_array;
+      if (exercise_obj.id === exercise_id) {
+        details_array = exercise_obj.details;
+        for (var i = 0; i < details_array.length; i++) {
+          if (details_array[i].set === set) {
+            details_array[i].reps = new_reps.target.value;
+          }
+        }
+        exercise_obj.details = details_array;
+      }
+    }
+
+    this.setState({ exercises: temp_exercise_state });
+  }
+
   handleDeleteSet(set, exercise_id) {
     var temp_exercise_state = this.state.exercises;
+
     for (var exercise_obj of temp_exercise_state) {
+      var details_array;
       if (exercise_obj.id === exercise_id) {
-        var details_array = exercise_obj.details;
+        details_array = exercise_obj.details;
         for (var i = 0; i < details_array.length; i++) {
           if (details_array[i].set === set) {
             details_array.splice(i, 1);
@@ -115,12 +183,10 @@ class CreateWorkout extends Component {
           id: uuidv4(),
           type: "",
           category: "",
-          details: [{ set: 1, lbs: 0, reps: 0 }],
+          details: [{ set: 1, weight: 0, reps: 0 }],
         },
       ],
     }));
-
-    console.log(this.state.exercises);
   }
 
   handleAddSet(id) {
@@ -130,7 +196,7 @@ class CreateWorkout extends Component {
           var tempobj = single_exercise;
           var number_set = single_exercise.details.length + 1;
           var tempexercise = this.state.exercises[index].details.concat([
-            { set: number_set, lbs: 0, reps: 0 },
+            { set: number_set, weight: 0, reps: 0 },
           ]);
           tempobj.details = tempexercise;
           this.setState((prevState) => {
@@ -145,8 +211,6 @@ class CreateWorkout extends Component {
   }
 
   handleChangeType(type, id) {
-    console.log(type);
-    console.log(id);
     this.state.exercises.forEach(
       function (single_exercise, index) {
         if (single_exercise.id === id) {
@@ -159,10 +223,24 @@ class CreateWorkout extends Component {
             Object.assign(exercise_object, tempobj);
             return { exercise: newData };
           });
-          console.log(this.state.exercises);
         }
       }.bind(this)
     );
+  }
+
+  startCounting() {
+    setInterval(this.countUp, 1000);
+  }
+
+  countUp() {
+    this.setState(({ timer }) => ({ timer: timer + 1 }));
+
+    this.setState(() => {
+      var minutes = Math.floor(this.state.timer / 60);
+      var seconds = ("0" + (this.state.timer % 60)).slice(-2);
+
+      return { timerString: `${minutes}:${seconds}` };
+    });
   }
 
   render() {
@@ -170,6 +248,19 @@ class CreateWorkout extends Component {
     return (
       <div className={classes.mainContainer}>
         <form onSubmit={this.handleSubmit} className={classes.form}>
+          <div className={classes.timer}>Timer: {this.state.timerString}</div>
+          <FormGroup className={classes.switchButton}>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={this.state.public}
+                  onChange={this.switchPublic}
+                />
+              }
+              label="Public"
+            />
+          </FormGroup>
+
           <div className={classes.textFieldContainer}>
             <TextField
               required
@@ -224,21 +315,27 @@ class CreateWorkout extends Component {
                 {this.state.exercises.map((exercise, key) => {
                   return (
                     <div key={exercise.id}>
-                      Type:
-                      <Select
-                        options={groupedOptions}
-                        onChange={(e) => {
-                          this.handleChangeType(e, exercise.id);
-                        }}
-                        className={classes.dropDownMenu}
-                      />
-                      <FontAwesomeIcon
-                        icon={faTrash}
-                        className={classes.trashIcon}
-                        onClick={() => {
-                          this.handleDeleteExercise(exercise.id);
-                        }}
-                      />
+                      <div className={classes.exerciseType}>
+                        Type:
+                        <Select
+                          options={groupedOptions}
+                          onChange={(e) => {
+                            this.handleChangeType(e, exercise.id);
+                          }}
+                          className={classes.dropDownMenu}
+                        />
+                        <Tooltip title="Delete Exercise">
+                          <IconButton>
+                            <FontAwesomeIcon
+                              icon={faTrash}
+                              className={classes.trashIcon}
+                              onClick={() => {
+                                this.handleDeleteExercise(exercise.id);
+                              }}
+                            />
+                          </IconButton>
+                        </Tooltip>
+                      </div>
                       {this.state.exercises[key].details.map(
                         (detail, detail_key) => {
                           return (
@@ -255,25 +352,43 @@ class CreateWorkout extends Component {
                               <TextField
                                 id="standard-required"
                                 label="Reps"
-                                defaultValue=""
+                                value={detail.reps}
                                 variant="standard"
+                                onChange={(e) => {
+                                  this.handleChangeRepsNumber(
+                                    detail_key + 1,
+                                    exercise.id,
+                                    e
+                                  );
+                                }}
                               />
                               <TextField
                                 id="standard-required"
                                 label="Weight"
-                                defaultValue=""
+                                value={detail.weight}
                                 variant="standard"
-                              />
-                              <FontAwesomeIcon
-                                icon={faTrash}
-                                className={classes.trashIcon}
-                                onClick={() => {
-                                  this.handleDeleteSet(
+                                onChange={(e) => {
+                                  this.handleChangeWeightNumber(
                                     detail_key + 1,
-                                    exercise.id
+                                    exercise.id,
+                                    e
                                   );
                                 }}
                               />
+                              <Tooltip title="Delete Set">
+                                <IconButton>
+                                  <FontAwesomeIcon
+                                    icon={faTrash}
+                                    className={classes.trashIcon}
+                                    onClick={() => {
+                                      this.handleDeleteSet(
+                                        detail_key + 1,
+                                        exercise.id
+                                      );
+                                    }}
+                                  />
+                                </IconButton>
+                              </Tooltip>
                             </div>
                           );
                         }

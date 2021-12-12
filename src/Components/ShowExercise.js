@@ -30,7 +30,8 @@ class ShowExercise extends Component {
     }
     try {
       var exerciseData = await getExercisesByUser();
-      if (exerciseData.success) {
+      console.log(exerciseData);
+      if (exerciseData.success || exerciseData.data.data.length === 0) {
         this.setState({
           exercise_list: exerciseData.data.data,
           existing_exercises: true,
@@ -55,12 +56,12 @@ class ShowExercise extends Component {
   render() {
     return (
       <div>
-        {!this.state.existing_exercises ? (
+        {!this.state.existing_exercises || this.state.exercise_list.length === 0 ? (
           <div>You don't have any exercises!</div>
         ) : (
           this.state.exercise_list.map((exercise, i) => {
             return (
-              <div>
+              <div key={i}>
                 <div>{JSON.stringify(exercise)}</div>
                 <Link to={`/exercise/${exercise.id}`}>Link!</Link>
               </div>

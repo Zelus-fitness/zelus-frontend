@@ -27,6 +27,19 @@ export default {
     margin: "10px",
   },
 
+  exerciseType: {
+    display: "flex",
+    flexDirection: "row",
+  },
+
+  timer: {
+    margin: "10px",
+  },
+
+  switchButton: {
+    margin: "10px",
+  },
+
   submitButton: {
     width: "7.5vw",
     height: "5vh",

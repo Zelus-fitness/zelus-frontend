@@ -33,13 +33,14 @@ class Dashboard extends Component {
     }
 
     var workoutData = await getWorkoutsByUser();
-    if (!workoutData) {
+
+    if (!workoutData || workoutData.length === 0) {
       this.setState({ existing_workouts: false });
     } else if (workoutData) {
       this.setState({ existing_workouts: true });
     }
   }
-  
+
   render() {
     const { classes } = this.props;
 
