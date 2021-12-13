@@ -67,4 +67,5 @@ export default {
   notesStringContainer: { flexDirection: "row", display: "flex" },
   notesHeader: { marginRight: "5px", marginTop: "10px", fontWeight: "700" },
   notesData: { marginTop: "10px" },
+  linkDecoration: { textDecoration: "none", color: "black" },
 };

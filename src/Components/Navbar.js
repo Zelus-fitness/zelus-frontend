@@ -31,6 +31,8 @@ class Navbar extends Component {
     var result = await signOutUser();
     if (result.success) {
       localStorage.removeItem("token");
+      localStorage.removeItem("id");
+
       this.props.history.push("/");
 
       toast.success("Successfully Logged Out", {
@@ -61,6 +63,7 @@ class Navbar extends Component {
                     ? `${classes.sidebarLinkisActive}`
                     : `${classes.sideBarLink}`
                 }`}
+                key={index}
               >
                 <div className={classes.fontAwesomeContainer}>
                   <FontAwesomeIcon icon={icon} />

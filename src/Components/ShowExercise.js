@@ -54,19 +54,80 @@ class ShowExercise extends Component {
   }
 
   render() {
+    const { classes } = this.props;
+    const monthNames = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
     return (
-      <div>
-        {!this.state.existing_exercises || this.state.exercise_list.length === 0 ? (
-          <div>You don't have any exercises!</div>
-        ) : (
+      <div className={classes.mainContainer}>
+        <div className={classes.myExercisesHeaderContainer}>
+          <h2>My Exercises</h2>
+        </div>
+        {this.state.existing_exercises ||
+        this.state.exercise_list.length === 0 ? (
           this.state.exercise_list.map((exercise, i) => {
+            console.log(exercise);
+            var new_datetime_format = new Date(exercise.created_at);
+            console.log(new_datetime_format);
             return (
               <div key={i}>
-                <div>{JSON.stringify(exercise)}</div>
-                <Link to={`/exercise/${exercise.id}`}>Link!</Link>
+                <Link
+                  to={`/exercise/${exercise.id}`}
+                  className={classes.linkDecoration}
+                >
+                  <div className={classes.exerciseContainer}>
+                    <div className={classes.exerciseNameText}>
+                      <div className={classes.exerciseType}>
+                        {exercise.type
+                          ? exercise.type
+                          : `${
+                              monthNames[new_datetime_format.getMonth()]
+                            } ${new_datetime_format.getDate()} Exercise`}
+                      </div>
+                    </div>
+                    <div className={classes.exerciseNameText}>
+                      {`${
+                        monthNames[new_datetime_format.getMonth()]
+                      } ${new_datetime_format.getDate()}`}
+                    </div>
+                    <div>
+                      <div className={classes.detailHeader}>Details</div>
+                      <div>
+                        {exercise.details.map((single_set) => {
+                          return (
+                            <div className={classes.oneSetRow}>
+                              <div
+                                className={classes.oneSetRowChild}
+                              >{`Set: ${single_set.set},`}</div>
+                              <div
+                                className={classes.oneSetRowChild}
+                              >{`Reps: ${single_set.reps},`}</div>
+                              <div
+                                className={classes.oneSetRowChild}
+                              >{`Weight: ${single_set.weight},`}</div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  </div>
+                </Link>
               </div>
             );
           })
+        ) : (
+          <div>You don't have any exercises!</div>
         )}
       </div>
     );

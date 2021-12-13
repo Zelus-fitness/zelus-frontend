@@ -95,7 +95,7 @@ class CreateWorkout extends Component {
   }
 
   handleChangeWeightNumber(set, exercise_id, new_weight) {
-    if (!Number(new_weight.target.value)) {
+    if (!new_weight.target.validity.valid) {
       return;
     }
 
@@ -118,7 +118,7 @@ class CreateWorkout extends Component {
   }
 
   handleChangeRepsNumber(set, exercise_id, new_reps) {
-    if (!Number(new_reps.target.value)) {
+    if (!new_reps.target.validity.valid) {
       return;
     }
 

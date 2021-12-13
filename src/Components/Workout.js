@@ -5,7 +5,6 @@ import styles from "../Styles/WorkoutStyles";
 import Button from "@mui/material/Button";
 import { getWorkoutsByUser, checkForToken } from "../APIManager";
 import { toast } from "react-toastify";
-import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClock } from "@fortawesome/free-solid-svg-icons";
 
@@ -81,54 +80,59 @@ class Workout extends Component {
         </div>
 
         <div>
-          {!this.state.existing_workouts ? (
-            <div className={classes.noWorkoutText}>
-              <p>You don't have any workouts! You should create one</p>
-            </div>
-          ) : (
+          {this.state.existing_workouts ? (
             <div>
-              {this.state.workouts.map((data, i) => {
-                console.log(data);
+              {this.state.workouts.map((data, key) => {
                 var minutes = Math.floor(data.time / 60);
                 var seconds = ("0" + (data.time % 60)).slice(-2);
 
                 var timer_string = `${minutes}:${seconds}`;
 
                 var new_datetime_format = new Date(data.created_at);
-                console.log(new_datetime_format);
+
                 return (
-                  <div className={classes.workoutContainer}>
-                    <div className={classes.workoutNameText}>
-                      <div className={classes.workoutName}>{data.name}</div>
-                    </div>
-                    <div className={classes.workoutNameText}>
-                      {`${
-                        monthNames[new_datetime_format.getMonth()]
-                      } ${new_datetime_format.getDate()}`}
-                    </div>
-                    <div className={classes.timerStringContainer}>
-                      <div className={classes.fontAwesomeContainer}>
-                        <FontAwesomeIcon icon={faClock} />
+                  <Link
+                    to={`/workout/${data.id}`}
+                    className={classes.linkDecoration}
+                    key={key}
+                  >
+                    <div className={classes.workoutContainer}>
+                      <div className={classes.workoutNameText}>
+                        <div className={classes.workoutName}>{data.name}</div>
                       </div>
-                      <div>{timer_string}</div>
-                    </div>
-                    <div>
-                      <div className={classes.exerciseHeader}>Exercise</div>
+                      <div className={classes.workoutNameText}>
+                        {`${
+                          monthNames[new_datetime_format.getMonth()]
+                        } ${new_datetime_format.getDate()}`}
+                      </div>
+                      <div className={classes.timerStringContainer}>
+                        <div className={classes.fontAwesomeContainer}>
+                          <FontAwesomeIcon icon={faClock} />
+                        </div>
+                        <div>{timer_string}</div>
+                      </div>
                       <div>
-                        {data.exercise.map((single_exercise) => {
-                          return <div>{single_exercise.type}</div>;
-                        })}
+                        <div className={classes.exerciseHeader}>Exercise</div>
+                        <div>
+                          {data.exercise.map((single_exercise,key) => {
+                            return <div key={key}>{single_exercise.type}</div>;
+                          })}
+                        </div>
+                      </div>
+                      <div className={classes.notesStringContainer}>
+                        <div className={classes.notesHeader}>{`Notes: `}</div>
+                        <div
+                          className={classes.notesData}
+                        >{` ${data.notes}`}</div>
                       </div>
                     </div>
-                    <div className={classes.notesStringContainer}>
-                      <div className={classes.notesHeader}>{`Notes: `}</div>
-                      <div
-                        className={classes.notesData}
-                      >{` ${data.notes}`}</div>
-                    </div>
-                  </div>
+                  </Link>
                 );
               })}
+            </div>
+          ) : (
+            <div className={classes.noWorkoutText}>
+              <p>You don't have any workouts! You should create one</p>
             </div>
           )}
         </div>

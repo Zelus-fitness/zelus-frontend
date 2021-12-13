@@ -1,11 +1,5 @@
 import React, { Component } from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  withRouter,
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import SignIn from "./Components/SignIn";
 import SignUp from "./Components/SignUp";
@@ -18,6 +12,7 @@ import CreateWorkout from "./Components/CreateWorkout";
 import Profile from "./Components/Profile";
 import Layout from "./Layout";
 import Find from "./Components/Find";
+import SingleWorkout from "./Components/SingleWorkout";
 
 export default class App extends Component {
   render() {
@@ -55,6 +50,9 @@ export default class App extends Component {
               </Route>
               <Route exact path="/exercise/:id">
                 <SingleExercise />
+              </Route>
+              <Route exact path="/workout/:id">
+                <SingleWorkout />
               </Route>
               <Route exact path="/createexercise">
                 <CreateExercise />

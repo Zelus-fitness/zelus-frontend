@@ -1,8 +1,10 @@
+import jwt_decode from "jwt-decode";
+
 //Leave out the trailing "/"
 //CORRECT: yahoo.com
 //INCORRECT: yahoo.com/
-const URL = "https://zelus-fitness.herokuapp.com";
-// const URL = "http://localhost:8002";
+// const URL = "https://zelus-fitness.herokuapp.com";
+const URL = "http://localhost:8002";
 
 export const checkForToken = () => {
   const userToken =
@@ -12,14 +14,16 @@ export const checkForToken = () => {
 };
 
 //Saves token to local storage
-export const saveToken = (token) => {
+export const saveToken = (token, id) => {
   if (token === undefined) {
     localStorage.removeItem("token");
+    localStorage.removeItem("id");
 
     console.log("Error");
   } else {
     var newtoken = token.replace("JWT ", "");
     localStorage.setItem("token", newtoken);
+    localStorage.setItem("id", id);
   }
 };
 
@@ -68,8 +72,9 @@ export async function logInUser(object) {
     });
 
   let token = loginUser.token;
-
-  saveToken(token);
+  var id = jwt_decode(token).id;
+  console.log(id);
+  saveToken(token, id);
 
   return loginUser;
 }
@@ -273,6 +278,28 @@ export async function signOutUser() {
 
 export async function findPublicWorkout() {
   const url = `${URL}/publicworkout`;
+  const data = {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: "JWT " + `${checkForToken()}`,
+    },
+  };
+
+  const workoutData = await fetch(url, data)
+    .then((response) => checkForErrors(response))
+    .then((results) => {
+      return results;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  return workoutData;
+}
+
+export async function getWorkoutByID(id) {
+  const url = `${URL}/workout/${id}`;
   const data = {
     method: "GET",
     headers: {
