@@ -314,9 +314,12 @@ class CreateWorkout extends Component {
               <div>
                 {this.state.exercises.map((exercise, key) => {
                   return (
-                    <div key={exercise.id}>
+                    <div
+                      key={exercise.id}
+                      className={classes.exercisesContainer}
+                    >
                       <div className={classes.exerciseType}>
-                        Type:
+                        <div className={classes.type}>Type:</div>
                         <Select
                           options={groupedOptions}
                           onChange={(e) => {
@@ -324,7 +327,10 @@ class CreateWorkout extends Component {
                           }}
                           className={classes.dropDownMenu}
                         />
-                        <Tooltip title="Delete Exercise">
+                        <Tooltip
+                          title="Delete Exercise"
+                          className={classes.exerciseTrashContainer}
+                        >
                           <IconButton>
                             <FontAwesomeIcon
                               icon={faTrash}
@@ -343,39 +349,51 @@ class CreateWorkout extends Component {
                               key={detail_key}
                               className={classes.groupOfSets}
                             >
-                              <TextField
-                                id="standard-required"
-                                label="Set"
-                                defaultValue={detail_key + 1}
-                                variant="standard"
-                              />
-                              <TextField
-                                id="standard-required"
-                                label="Reps"
-                                value={detail.reps}
-                                variant="standard"
-                                onChange={(e) => {
-                                  this.handleChangeRepsNumber(
-                                    detail_key + 1,
-                                    exercise.id,
-                                    e
-                                  );
-                                }}
-                              />
-                              <TextField
-                                id="standard-required"
-                                label="Weight"
-                                value={detail.weight}
-                                variant="standard"
-                                onChange={(e) => {
-                                  this.handleChangeWeightNumber(
-                                    detail_key + 1,
-                                    exercise.id,
-                                    e
-                                  );
-                                }}
-                              />
-                              <Tooltip title="Delete Set">
+                              <div className={classes.textFieldContainer}>
+                                <TextField
+                                  id="standard-required"
+                                  label="Set"
+                                  defaultValue={detail_key + 1}
+                                  variant="standard"
+                                />
+                              </div>
+
+                              <div className={classes.textFieldContainer}>
+                                <TextField
+                                  id="standard-required"
+                                  label="Reps"
+                                  value={detail.reps}
+                                  variant="standard"
+                                  onChange={(e) => {
+                                    this.handleChangeRepsNumber(
+                                      detail_key + 1,
+                                      exercise.id,
+                                      e
+                                    );
+                                  }}
+                                />
+                              </div>
+
+                              <div className={classes.textFieldContainer}>
+                                <TextField
+                                  id="standard-required"
+                                  label="Weight"
+                                  value={detail.weight}
+                                  variant="standard"
+                                  onChange={(e) => {
+                                    this.handleChangeWeightNumber(
+                                      detail_key + 1,
+                                      exercise.id,
+                                      e
+                                    );
+                                  }}
+                                />
+                              </div>
+
+                              <Tooltip
+                                title="Delete Set"
+                                className={classes.setTrashContainer}
+                              >
                                 <IconButton>
                                   <FontAwesomeIcon
                                     icon={faTrash}
@@ -393,16 +411,18 @@ class CreateWorkout extends Component {
                           );
                         }
                       )}
-                      <Button
-                        key={exercise.id}
-                        variant="contained"
-                        className={classes.addSetButton}
-                        onClick={() => {
-                          this.handleAddSet(exercise.id);
-                        }}
-                      >
-                        Add Set
-                      </Button>
+                      <div className={classes.addSetButtonContainer}>
+                        <Button
+                          key={exercise.id}
+                          variant="contained"
+                          className={classes.addSetButton}
+                          onClick={() => {
+                            this.handleAddSet(exercise.id);
+                          }}
+                        >
+                          Add Set
+                        </Button>
+                      </div>
                     </div>
                   );
                 })}

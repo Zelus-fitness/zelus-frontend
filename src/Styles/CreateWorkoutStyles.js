@@ -30,10 +30,12 @@ export default {
   exerciseType: {
     display: "flex",
     flexDirection: "row",
+    alignItems: "center",
   },
 
   timer: {
     margin: "10px",
+    fontSize: 20,
   },
 
   switchButton: {
@@ -57,6 +59,7 @@ export default {
     alignItems: "center",
     backgroundColor: `#0A9FFA !important`,
   },
+  type: { margin: "10px" },
 
   buttonContainer: {
     margin: "10px",
@@ -71,8 +74,21 @@ export default {
     backgroundColor: `#0A9FFA !important`,
   },
 
+  addSetButtonContainer: {
+    margin: "10px",
+  },
+
   dropDownMenu: {
     width: "30%",
+    margin: "10px",
+  },
+
+  exerciseTrashContainer: {
+    margin: "10px",
+  },
+
+  setTrashContainer: {
+    margin: "10px",
   },
 
   groupOfSets: {

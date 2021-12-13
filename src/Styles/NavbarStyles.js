@@ -33,7 +33,7 @@ export default {
 
   signOutButtonContainer: {
     marginTop: "auto",
-    margin: "50px"
+    margin: "50px",
   },
 
   sideBarLink: {
@@ -47,6 +47,7 @@ export default {
     textDecoration: "none",
     color: Colors.darkLight,
     height: "75px",
+    fontSize: "17.5px",
     "&:hover": {
       cursor: "pointer",
       color: Colors.primary,
@@ -65,11 +66,12 @@ export default {
     height: "75px",
     transition: "all 0.25s ease-in-out",
     borderBottom: "1px solid #9ca3af",
-
     textDecoration: "none",
     color: Colors.primary,
     boxShadow: "inset 7.5px 0px 0px 0px #FFFFFF",
+    fontSize: "17.5px",
   },
+  fontAwesomeContainer: { margin: "10px" },
   signoutButton: {
     width: "7.5vw",
     height: "5vh",

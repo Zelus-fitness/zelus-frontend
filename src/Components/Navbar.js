@@ -62,10 +62,10 @@ class Navbar extends Component {
                     : `${classes.sideBarLink}`
                 }`}
               >
-                <div>
+                <div className={classes.fontAwesomeContainer}>
                   <FontAwesomeIcon icon={icon} />
                 </div>
-                <div>{`${name}`}</div>
+                <div className={classes.navbarItemName}>{`${name}`}</div>
               </Link>
             );
           })}

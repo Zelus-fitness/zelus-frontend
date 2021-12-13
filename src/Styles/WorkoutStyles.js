@@ -28,7 +28,43 @@ export default {
       boxShadow: "rgb(0 0 0 / 13%) 0px 0.2rem 1.2rem 0px",
     },
   },
-  workoutText:{
-    margin:"10px"
-  }
+  workoutText: {
+    margin: "10px",
+  },
+  noWorkoutText: {
+    margin: "10px",
+  },
+  quickStartHeader: {
+    margin: "10px",
+  },
+  createWorkoutButtonContainer: {
+    margin: "10px",
+  },
+  myWorkoutsHeaderContainer: {
+    margin: "10px",
+  },
+  workoutName: {
+    fontSize: "30px",
+    fontWeight: "650",
+    marginBottom: "-2.5px",
+  },
+  timerStringContainer: {
+    marginTop: "15px",
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    fontSize: "17px",
+  },
+  fontAwesomeContainer: {
+    marginRight: "10px",
+  },
+  exerciseHeader: {
+    marginTop: "15px",
+    marginBottom: "2.5px",
+    fontWeight: "700",
+    fontSize: "17px",
+  },
+  notesStringContainer: { flexDirection: "row", display: "flex" },
+  notesHeader: { marginRight: "5px", marginTop: "10px", fontWeight: "700" },
+  notesData: { marginTop: "10px" },
 };
