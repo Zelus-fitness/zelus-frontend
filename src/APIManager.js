@@ -342,3 +342,69 @@ export async function updateWorkout(id, object) {
     });
   return workoutData;
 }
+
+export async function getFavoriteWorkouts() {
+  const url = `${URL}/getfavoriteworkout`;
+  const data = {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: "JWT " + `${checkForToken()}`,
+    },
+  };
+
+  const workoutData = await fetch(url, data)
+    .then((response) => checkForErrors(response))
+    .then((results) => {
+      return results;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  return workoutData;
+}
+
+export async function favoriteWorkoutAPI(id) {
+  const url = `${URL}/favoriteworkout/${id}`;
+  const data = {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: "JWT " + `${checkForToken()}`,
+    },
+  };
+
+  const workoutData = await fetch(url, data)
+    .then((response) => checkForErrors(response))
+    .then((results) => {
+      return results;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  return workoutData;
+}
+
+export async function unfavoriteWorkoutAPI(id) {
+  const url = `${URL}/unfavoriteworkout/${id}`;
+  const data = {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: "JWT " + `${checkForToken()}`,
+    },
+  };
+
+  const workoutData = await fetch(url, data)
+    .then((response) => checkForErrors(response))
+    .then((results) => {
+      return results;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  return workoutData;
+}

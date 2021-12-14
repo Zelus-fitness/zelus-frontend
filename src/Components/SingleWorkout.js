@@ -19,6 +19,7 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import Button from "@mui/material/Button";
 import { v4 as uuidv4 } from "uuid";
 import Spinner from "react-bootstrap/Spinner";
+import jwt_decode from "jwt-decode";
 
 class SingleWorkout extends Component {
   constructor(props) {
@@ -284,7 +285,9 @@ class SingleWorkout extends Component {
 
   render() {
     const { classes } = this.props;
-
+    var owner =
+      this.state.workout_data.created_by ===
+      jwt_decode(localStorage.getItem("token")).id;
     return (
       <div className={classes.mainContainer}>
         {!this.state.loading ? (
@@ -309,55 +312,94 @@ class SingleWorkout extends Component {
               </FormGroup>
 
               <div className={classes.textFieldContainer}>
-                <TextField
-                  required
-                  label="Name"
-                  name="name"
-                  variant="standard"
-                  id="standard-required"
-                  value={this.state.name}
-                  onChange={this.handleChangeName}
-                  className={classes.textField}
-                />
+                {owner ? (
+                  <TextField
+                    required
+                    label="Name"
+                    name="name"
+                    variant="standard"
+                    id="standard-required"
+                    value={this.state.name}
+                    onChange={this.handleChangeName}
+                    className={classes.textField}
+                  />
+                ) : (
+                  <TextField
+                    required
+                    disabled
+                    label="Name"
+                    name="name"
+                    variant="standard"
+                    id="standard-required"
+                    value={this.state.name}
+                    onChange={this.handleChangeName}
+                    className={classes.textField}
+                  />
+                )}
               </div>
 
               <div className={classes.textFieldContainer}>
-                <TextField
-                  required
-                  label="Notes"
-                  name="notes"
-                  id="standard-required"
-                  label="Notes"
-                  variant="standard"
-                  value={this.state.notes}
-                  onChange={this.handleChangeNotes}
-                  className={classes.textField}
-                />
+                {owner ? (
+                  <TextField
+                    required
+                    label="Notes"
+                    name="notes"
+                    id="standard-required"
+                    label="Notes"
+                    variant="standard"
+                    value={this.state.notes}
+                    onChange={this.handleChangeNotes}
+                    className={classes.textField}
+                  />
+                ) : (
+                  <TextField
+                    required
+                    disabled
+                    label="Notes"
+                    name="notes"
+                    id="standard-required"
+                    label="Notes"
+                    variant="standard"
+                    value={this.state.notes}
+                    onChange={this.handleChangeNotes}
+                    className={classes.textField}
+                  />
+                )}
               </div>
 
               <div className={classes.buttonContainer}>
-                <Button
-                  variant="contained"
-                  className={classes.addExerciseButton}
-                  onClick={() => {
-                    this.handleAddExercise();
-                  }}
-                >
-                  Add Exercise
-                </Button>
+                {this.state.workout_data.created_by ===
+                jwt_decode(localStorage.getItem("token")).id ? (
+                  <Button
+                    variant="contained"
+                    className={classes.addExerciseButton}
+                    onClick={() => {
+                      this.handleAddExercise();
+                    }}
+                  >
+                    Add Exercise
+                  </Button>
+                ) : (
+                  <div></div>
+                )}
               </div>
 
               <div className={classes.buttonContainer}>
-                <Button
-                  variant="contained"
-                  type="submit"
-                  className={classes.submitButton}
-                  onClick={() => {
-                    this.setState({ button: 2 });
-                  }}
-                >
-                  Save Changes
-                </Button>
+                {this.state.workout_data.created_by ===
+                jwt_decode(localStorage.getItem("token")).id ? (
+                  <Button
+                    variant="contained"
+                    type="submit"
+                    className={classes.submitButton}
+                    onClick={() => {
+                      this.setState({ button: 2 });
+                    }}
+                  >
+                    Save Changes
+                  </Button>
+                ) : (
+                  <div></div>
+                )}
               </div>
 
               <div>
@@ -371,32 +413,53 @@ class SingleWorkout extends Component {
                         >
                           <div className={classes.exerciseType}>
                             <div className={classes.type}>Type:</div>
-                            <Select
-                              defaultValue={{
-                                value: exercise.type,
-                                label: exercise.type,
-                              }}
-                              options={groupedOptions}
-                              onChange={(e) => {
-                                this.handleChangeType(e, exercise.id);
-                              }}
-                              className={classes.dropDownMenu}
-                            />
-                            <Tooltip
-                              title="Delete Exercise"
-                              className={classes.exerciseTrashContainer}
-                            >
-                              <IconButton
-                                onClick={() => {
-                                  this.handleDeleteExercise(exercise.id);
+                            {this.state.workout_data.created_by ===
+                            jwt_decode(localStorage.getItem("token")).id ? (
+                              <Select
+                                defaultValue={{
+                                  value: exercise.type,
+                                  label: exercise.type,
                                 }}
+                                options={groupedOptions}
+                                onChange={(e) => {
+                                  this.handleChangeType(e, exercise.id);
+                                }}
+                                className={classes.dropDownMenu}
+                              />
+                            ) : (
+                              <Select
+                                isDisabled
+                                defaultValue={{
+                                  value: exercise.type,
+                                  label: exercise.type,
+                                }}
+                                options={groupedOptions}
+                                onChange={(e) => {
+                                  this.handleChangeType(e, exercise.id);
+                                }}
+                                className={classes.dropDownMenu}
+                              />
+                            )}
+                            {this.state.workout_data.created_by ===
+                            jwt_decode(localStorage.getItem("token")).id ? (
+                              <Tooltip
+                                title="Delete Exercise"
+                                className={classes.exerciseTrashContainer}
                               >
-                                <FontAwesomeIcon
-                                  icon={faTrash}
-                                  className={classes.trashIcon}
-                                />
-                              </IconButton>
-                            </Tooltip>
+                                <IconButton
+                                  onClick={() => {
+                                    this.handleDeleteExercise(exercise.id);
+                                  }}
+                                >
+                                  <FontAwesomeIcon
+                                    icon={faTrash}
+                                    className={classes.trashIcon}
+                                  />
+                                </IconButton>
+                              </Tooltip>
+                            ) : (
+                              <div></div>
+                            )}
                           </div>
                           {this.state.exercises[key].details.map(
                             (detail, detail_key) => {
@@ -406,84 +469,161 @@ class SingleWorkout extends Component {
                                   className={classes.groupOfSets}
                                 >
                                   <div className={classes.textFieldContainer}>
-                                    <TextField
-                                      id="standard-required"
-                                      label="Reps"
-                                      label="Set"
-                                      defaultValue={detail_key + 1}
-                                      variant="standard"
-                                    />
-                                  </div>
-
-                                  <div className={classes.textFieldContainer}>
-                                    <TextField
-                                      id="standard-required"
-                                      label="Reps"
-                                      value={detail.reps}
-                                      variant="standard"
-                                      onChange={(e) => {
-                                        this.handleChangeRepsNumber(
-                                          detail_key + 1,
-                                          exercise.id,
-                                          e
-                                        );
-                                      }}
-                                    />
-                                  </div>
-
-                                  <div className={classes.textFieldContainer}>
-                                    <TextField
-                                      id="standard-required"
-                                      label="Weight"
-                                      value={detail.weight}
-                                      variant="standard"
-                                      onChange={(e) => {
-                                        this.handleChangeWeightNumber(
-                                          detail_key + 1,
-                                          exercise.id,
-                                          e
-                                        );
-                                      }}
-                                    />
-                                  </div>
-
-                                  <Tooltip
-                                    title="Delete Set"
-                                    className={classes.setTrashContainer}
-                                  >
-                                    <IconButton
-                                      onClick={() => {
-                                        this.handleDeleteSet(
-                                          detail_key + 1,
-                                          exercise.id
-                                        );
-                                      }}
-                                    >
-                                      <FontAwesomeIcon
-                                        icon={faTrash}
-                                        className={classes.trashIcon}
+                                    {owner ? (
+                                      <TextField
+                                        id="standard-required"
+                                        label="Reps"
+                                        label="Set"
+                                        defaultValue={detail_key + 1}
+                                        variant="standard"
                                       />
-                                    </IconButton>
-                                  </Tooltip>
+                                    ) : (
+                                      <TextField
+                                        disabled
+                                        id="standard-required"
+                                        label="Reps"
+                                        label="Set"
+                                        defaultValue={detail_key + 1}
+                                        variant="standard"
+                                      />
+                                    )}
+                                  </div>
+
+                                  <div className={classes.textFieldContainer}>
+                                    {owner ? (
+                                      <TextField
+                                        id="standard-required"
+                                        label="Reps"
+                                        value={detail.reps}
+                                        variant="standard"
+                                        onChange={(e) => {
+                                          this.handleChangeRepsNumber(
+                                            detail_key + 1,
+                                            exercise.id,
+                                            e
+                                          );
+                                        }}
+                                      />
+                                    ) : (
+                                      <TextField
+                                        disabled
+                                        id="standard-required"
+                                        label="Reps"
+                                        value={detail.reps}
+                                        variant="standard"
+                                        onChange={(e) => {
+                                          this.handleChangeRepsNumber(
+                                            detail_key + 1,
+                                            exercise.id,
+                                            e
+                                          );
+                                        }}
+                                      />
+                                    )}
+                                  </div>
+
+                                  <div className={classes.textFieldContainer}>
+                                    {owner ? (
+                                      <TextField
+                                        id="standard-required"
+                                        label="Weight"
+                                        value={detail.weight}
+                                        variant="standard"
+                                        onChange={(e) => {
+                                          this.handleChangeWeightNumber(
+                                            detail_key + 1,
+                                            exercise.id,
+                                            e
+                                          );
+                                        }}
+                                      />
+                                    ) : (
+                                      <TextField
+                                        id="standard-required"
+                                        disabled
+                                        label="Weight"
+                                        value={detail.weight}
+                                        variant="standard"
+                                        onChange={(e) => {
+                                          this.handleChangeWeightNumber(
+                                            detail_key + 1,
+                                            exercise.id,
+                                            e
+                                          );
+                                        }}
+                                      />
+                                    )}
+                                  </div>
+                                  {this.state.workout_data.created_by ===
+                                  jwt_decode(localStorage.getItem("token"))
+                                    .id ? (
+                                    <Tooltip
+                                      title="Delete Set"
+                                      className={classes.setTrashContainer}
+                                    >
+                                      <IconButton
+                                        onClick={() => {
+                                          this.handleDeleteSet(
+                                            detail_key + 1,
+                                            exercise.id
+                                          );
+                                        }}
+                                      >
+                                        <FontAwesomeIcon
+                                          icon={faTrash}
+                                          className={classes.trashIcon}
+                                        />
+                                      </IconButton>
+                                    </Tooltip>
+                                  ) : (
+                                    <div></div>
+                                  )}
                                 </div>
                               );
                             }
                           )}
                           <div className={classes.addSetButtonContainer}>
-                            <Button
-                              key={exercise.id}
-                              variant="contained"
-                              className={classes.addSetButton}
-                              onClick={() => {
-                                this.handleAddSet(exercise.id);
-                              }}
-                            >
-                              Add Set
-                            </Button>
+                            {this.state.workout_data.created_by ===
+                            jwt_decode(localStorage.getItem("token")).id ? (
+                              <Button
+                                key={exercise.id}
+                                variant="contained"
+                                className={classes.addSetButton}
+                                onClick={() => {
+                                  this.handleAddSet(exercise.id);
+                                }}
+                              >
+                                Add Set
+                              </Button>
+                            ) : (
+                              <div></div>
+                            )}
                           </div>
                         </div>
                       );
                     })}
+                    <div>
+                      {this.state.workout_data.created_by ===
+                      jwt_decode(localStorage.getItem("token")).id ? (
+                        <div></div>
+                      ) : (
+                        <div>
+                          <Link
+                            to={{
+                              pathname: "/customcreateworkout",
+                              state: { workout: this.state.workout_data },
+                            }}
+                          >
+                            <Button
+                              variant="contained"
+                              className={classes.submitButton}
+                            >
+                              Use this template
+                            </Button>
+                          </Link>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 ) : (
                   <div></div>

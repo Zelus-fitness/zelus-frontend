@@ -16,6 +16,10 @@ export default {
   },
 
   submitButton: { width: "15vw", backgroundColor: `${brand} !important` },
+  goToFavoritesButton: {
+    width: "15vw",
+    backgroundColor: `${brand} !important`,
+  },
   workoutContainer: {
     background: "rgb(231, 231, 231)",
     padding: "10px",

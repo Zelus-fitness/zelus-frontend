@@ -13,6 +13,7 @@ import Profile from "./Components/Profile";
 import Layout from "./Layout";
 import Find from "./Components/Find";
 import SingleWorkout from "./Components/SingleWorkout";
+import CustomCreateWorkout from "./Components/CustomCreateWorkout";
 
 export default class App extends Component {
   render() {
@@ -44,6 +45,9 @@ export default class App extends Component {
               </Route>
               <Route exact path="/workout/create">
                 <CreateWorkout />
+              </Route>
+              <Route exact path="/customcreateworkout">
+                <CustomCreateWorkout />
               </Route>
               <Route exact path="/exercise">
                 <ShowExercise />
