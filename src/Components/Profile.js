@@ -52,10 +52,13 @@ class Profile extends Component {
 
     var info = await getExtendedUserInfo();
     if (info.success) {
+      console.log(info.data.data);
       var temp_info = info.data.data;
-      var temp_feet = temp_info.height?.split("'");
-      var temp_inch =
-        temp_info.height?.height[temp_info.height.indexOf('"') - 1];
+      if (temp_info.height != 0) {
+        var temp_feet = temp_info.height?.split("'");
+        var temp_inch =
+          temp_info.height?.height[temp_info.height.indexOf('"') - 1];
+      }
       var temp_weight;
       var temp_age;
       var temp_imperial;
