@@ -92,7 +92,7 @@ class Workout extends Component {
 
                 return (
                   <Link
-                    to={`/workout/${data.id}`}
+                    to={`/singleworkout/${data.id}`}
                     className={classes.linkDecoration}
                     key={key}
                   >
@@ -114,7 +114,7 @@ class Workout extends Component {
                       <div>
                         <div className={classes.exerciseHeader}>Exercise</div>
                         <div>
-                          {data.exercise.map((single_exercise,key) => {
+                          {data.exercise.map((single_exercise, key) => {
                             return <div key={key}>{single_exercise.type}</div>;
                           })}
                         </div>

@@ -11,5 +11,31 @@ export const Colors = {
 const { primary, secondary, tertiary, darkLight, brand, green, red } = Colors;
 
 export default {
-  
-}
+  mainContainer: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItem: "center",
+    padding: "50px",
+    width: "25%",
+  },
+  textFieldHeader: {
+    margin: "10px",
+    fontSize: "17px",
+    fontWeight: "700",
+  },
+  textFieldContainer: {
+    margin: "10px",
+  },
+  oneRow: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  oneDetailRow: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+  },
+};

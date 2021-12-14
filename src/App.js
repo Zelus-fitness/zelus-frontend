@@ -51,7 +51,7 @@ export default class App extends Component {
               <Route exact path="/exercise/:id">
                 <SingleExercise />
               </Route>
-              <Route exact path="/workout/:id">
+              <Route exact path="/singleworkout/:id">
                 <SingleWorkout />
               </Route>
               <Route exact path="/createexercise">

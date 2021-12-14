@@ -331,13 +331,14 @@ class CreateWorkout extends Component {
                           title="Delete Exercise"
                           className={classes.exerciseTrashContainer}
                         >
-                          <IconButton>
+                          <IconButton
+                            onClick={() => {
+                              this.handleDeleteExercise(exercise.id);
+                            }}
+                          >
                             <FontAwesomeIcon
                               icon={faTrash}
                               className={classes.trashIcon}
-                              onClick={() => {
-                                this.handleDeleteExercise(exercise.id);
-                              }}
                             />
                           </IconButton>
                         </Tooltip>
@@ -394,16 +395,17 @@ class CreateWorkout extends Component {
                                 title="Delete Set"
                                 className={classes.setTrashContainer}
                               >
-                                <IconButton>
+                                <IconButton
+                                  onClick={() => {
+                                    this.handleDeleteSet(
+                                      detail_key + 1,
+                                      exercise.id
+                                    );
+                                  }}
+                                >
                                   <FontAwesomeIcon
                                     icon={faTrash}
                                     className={classes.trashIcon}
-                                    onClick={() => {
-                                      this.handleDeleteSet(
-                                        detail_key + 1,
-                                        exercise.id
-                                      );
-                                    }}
                                   />
                                 </IconButton>
                               </Tooltip>

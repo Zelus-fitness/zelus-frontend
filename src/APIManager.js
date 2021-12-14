@@ -319,3 +319,26 @@ export async function getWorkoutByID(id) {
     });
   return workoutData;
 }
+
+export async function updateWorkout(id, object) {
+  const url = `${URL}/workout/${id}`;
+  const data = {
+    method: "PUT",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: "JWT " + `${checkForToken()}`,
+    },
+    body: JSON.stringify(object),
+  };
+
+  const workoutData = await fetch(url, data)
+    .then((response) => checkForErrors(response))
+    .then((results) => {
+      return results;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  return workoutData;
+}

@@ -30,7 +30,7 @@ class ShowExercise extends Component {
     }
     try {
       var exerciseData = await getExercisesByUser();
-      console.log(exerciseData);
+ 
       if (exerciseData.success || exerciseData.data.data.length === 0) {
         this.setState({
           exercise_list: exerciseData.data.data,
@@ -77,9 +77,9 @@ class ShowExercise extends Component {
         {this.state.existing_exercises ||
         this.state.exercise_list.length === 0 ? (
           this.state.exercise_list.map((exercise, i) => {
-            console.log(exercise);
+
             var new_datetime_format = new Date(exercise.created_at);
-            console.log(new_datetime_format);
+
             return (
               <div key={i}>
                 <Link
