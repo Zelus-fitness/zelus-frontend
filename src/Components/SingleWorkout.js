@@ -52,19 +52,19 @@ class SingleWorkout extends Component {
   }
 
   async componentDidMount() {
-    if (!checkForToken()) {
-      this.props.history.push("/");
-      toast.error("You have been logged out", {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
-    }
+    // if (!checkForToken()) {
+    //   this.props.history.push("/");
+    //   toast.error("You have been logged out", {
+    //     position: "top-center",
+    //     autoClose: 5000,
+    //     hideProgressBar: false,
+    //     closeOnClick: true,
+    //     pauseOnHover: true,
+    //     draggable: true,
+    //     progress: undefined,
+    //     theme: "colored",
+    //   });
+    // }
     var url = window.location.pathname;
     this.state.id = url.substring(url.lastIndexOf("/") + 1);
     try {

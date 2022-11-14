@@ -22,9 +22,9 @@ class SignIn extends Component {
   }
 
   componentDidMount() {
-    if (checkForToken()) {
-      this.props.history.push("/dashboard");
-    }
+    // if (checkForToken()) {
+    //   this.props.history.push("/dashboard");
+    // }
   }
 
   async handleSubmit(e) {

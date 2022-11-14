@@ -3,8 +3,8 @@ import jwt_decode from "jwt-decode";
 //Leave out the trailing "/"
 //CORRECT: yahoo.com
 //INCORRECT: yahoo.com/
-const URL = "https://zelus-fitness.herokuapp.com";
-// const URL = "http://localhost:8002";
+// const URL = "https://zelus-fitness.herokuapp.com";
+const URL = "http://localhost:8002";
 
 export const checkForToken = () => {
   const userToken =

@@ -23,12 +23,12 @@ export default class App extends Component {
           <ToastContainer />
 
           <Switch>
-            <Route exact path="/">
+            {/* <Route exact path="/">
               <SignIn />
             </Route>
             <Route exact path="/signup">
               <SignUp />
-            </Route>
+            </Route> */}
 
             <Layout>
               <Route exact path="/dashboard">

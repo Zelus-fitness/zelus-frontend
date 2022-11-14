@@ -42,19 +42,19 @@ class CreateWorkout extends Component {
   }
 
   async componentDidMount() {
-    if (!checkForToken()) {
-      this.props.history.push("/");
-      toast.error("You have been logged out", {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
-    }
+    // if (!checkForToken()) {
+    //   this.props.history.push("/");
+    //   toast.error("You have been logged out", {
+    //     position: "top-center",
+    //     autoClose: 5000,
+    //     hideProgressBar: false,
+    //     closeOnClick: true,
+    //     pauseOnHover: true,
+    //     draggable: true,
+    //     progress: undefined,
+    //     theme: "colored",
+    //   });
+    // }
 
     this.startCounting();
   }
@@ -176,6 +176,19 @@ class CreateWorkout extends Component {
   }
 
   handleAddExercise() {
+
+    // workouts : {
+    //   name:
+    //   notes:
+    //   exercises: [
+    //     id: uuidv4(),
+    //     type: "",
+    //     category: "",
+    //     details: [{ set: 1, weight: 0, reps: 0 }],
+    //   ]
+    // }
+
+
     this.setState((prevState) => ({
       exercises: [
         ...prevState.exercises,

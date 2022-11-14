@@ -22,21 +22,21 @@ class CreateExercise extends Component {
     this.handleCheckBox = this.handleCheckBox.bind(this);
   }
 
-  componentDidMount() {
-    if (!checkForToken()) {
-      this.props.history.push("/");
-      toast.error("You have been logged out", {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
-    }
-  }
+  // componentDidMount() {
+  //   if (!checkForToken()) {
+  //     this.props.history.push("/");
+  //     toast.error("You have been logged out", {
+  //       position: "top-center",
+  //       autoClose: 5000,
+  //       hideProgressBar: false,
+  //       closeOnClick: true,
+  //       pauseOnHover: true,
+  //       draggable: true,
+  //       progress: undefined,
+  //       theme: "colored",
+  //     });
+  //   }
+  // }
 
   async handleSubmit(e) {
     e.preventDefault();
